@@ -1,0 +1,31 @@
+EVALUADOR: Jimmy Mori
+EVALUADO: Lucas Jimenez
+ESCENARIO ELEGIDO:
+- Tenemos bcrypt.hash() para registrar y bcrypt.compare() para el login. ¿Por qué no usamos bcrypt.decrypt() para recuperar la contraseña original y compararla directamente? ¿Existe ese método?
+
+RESUMEN DE LA RESPUESTA:
+No usamos bcrypt.decrypt() porque no existe. bcrypt utiliza hashing, que es un proceso unidireccional e irreversible, por lo que no se puede recuperar la contraseña original. En lugar de eso, se usa bcrypt.compare(), que hashea la contraseña ingresada y la compara con el hash almacenado. Esto mejora la seguridad, ya que las contraseñas nunca se guardan ni se pueden desencriptar.
+
+QUÉ ENTENDIÓ BIEN: (una frase)
+Como poner seguridad, creando administradores con permisos usando Tokens a mi sitio web.
+
+QUÉ NECESITA REPASAR: (una frase)
+De que otras maneras puedo seguir protegiendo mi sitio y hacerlo mas amigable y accesible para los clientes.
+
+
+
+EVALUADOR: Lucas
+EVALUADO: Jimmy
+ESCENARIO ELEGIDO:	
+
+Si alguien roba un token JWT válido, ¿qué puede hacer con él? ¿Qué mecanismo del sistema limita el daño? ¿Qué agregarías para hacerlo más seguro?
+
+RESUMEN DE LA RESPUESTA:
+
+No se hardcodea porque el JWT_SECRET es información sensible y debe mantenerse fuera del código para evitar exponerla y poder cambiarla fácilmente según el entorno
+
+QUÉ ENTENDIÓ BIEN: (una frase) 
+
+Caso todo
+
+QUÉ NECESITA REPASAR: (una frase) Sería para repasarlo unas veces para poder ver lo que hicimos.

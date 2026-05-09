@@ -1,0 +1,111 @@
+1.- Explica el flujo completo desde que un admin hace login hasta que puede agregar un plato. Menciona cada archivo que participa y qué hace cada uno.
+
+Flujo completo: login → agregar plato
+Paso 1: El admin inicia sesión
+
+El frontend envía email y contraseña al backend.
+
+Archivo: auth.routes.js
+Define la ruta:
+POST /login
+
+Paso 2: El controlador recibe los datos
+
+Archivo: auth.controller.js
+
+busca el usuario en la base de datos,
+verifica la contraseña con bcrypt.compare(),
+genera el JWT si todo es correcto.
+const token = jwt.sign(...)
+
+Paso 3: Se devuelve el token
+
+El backend responde:
+
+{
+  "token": "eyJhbGciOi..."
+}
+
+El frontend guarda ese token.
+
+Paso 4: El admin intenta agregar un plato
+
+El frontend envía:
+
+POST /api/platos
+Authorization: Bearer TOKEN
+Paso 5: Middleware verifica el JWT
+
+Archivo: verifyToken.js
+
+lee el token,
+valida la firma,
+
+Paso 6: Se ejecuta la ruta protegida
+
+Archivo: platos.routes.js
+
+La ruta usa el middleware:
+
+router.post("/", verifyToken, createPlato)
+Paso 7: El controlador guarda el plato
+
+Archivo: platos.controller.js
+
+recibe los datos,
+guarda el plato en la base de datos,
+responde éxito.
+
+2.- ¿Por qué bcrypt.compare() puede verificar la contraseña si el hash es irreversible? ¿Qué está haciendo internamente?
+
+Porque bcrypt no “desencripta” el hash.
+
+Lo que hace internamente es:
+
+toma la contraseña escrita,
+extrae el salt guardado dentro del hash,
+vuelve a generar un hash con esa misma configuración,
+compara ambos hashes.
+
+Si coinciden → contraseña correcta.
+
+Ejemplo:
+
+bcrypt.compare("123456", hashGuardado)
+
+No recupera la contraseña original; simplemente verifica si produce el mismo resultado.
+
+3.- Si alguien roba un token JWT válido, ¿qué puede hacer con él? ¿Qué mecanismo del sistema limita el daño? ¿Qué agregarías para hacerlo más seguro?
+
+
+
+Si alguien roba un JWT válido
+
+Puede actuar como el usuario autenticado hasta que el token expire.
+
+Por ejemplo podría:
+
+agregar platos,
+eliminar productos,
+hacer pedidos,
+acceder a rutas privadas.
+¿Qué limita el daño?
+
+Principalmente:
+
+Expiración del token
+
+expiresIn: "1h"
+
+Después de ese tiempo el token deja de funcionar.
+
+¿Qué agregar para más seguridad?
+Refresh Tokens
+Expiraciones cortas
+HTTPS obligatorio
+Logout con blacklist de tokens
+Roles (admin, cliente)
+Validar IP/dispositivo
+Guardar tokens en cookies httpOnly
+Rotación de tokens
+2FA/autenticación en dos pasos
