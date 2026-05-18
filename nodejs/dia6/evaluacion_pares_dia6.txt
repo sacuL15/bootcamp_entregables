@@ -1,0 +1,50 @@
+EVALUADOR: Lucas Jimenez
+EVALUADO: Jimmy Mori
+ESCENARIO ELEGIDO:
+- El repositorio del restaurante es público por error. ¿Qué información está expuesta si .env llegó a GitHub? ¿Qué deben hacer inmediatamente para mitigar el daño?
+
+RESUMEN DE LA RESPUESTA:
+Si .env se sube a un repositorio público en GitHub, quedan expuestas credenciales como MongoDB, JWT_SECRET y API keys. Esto puede permitir acceso no autorizado, robo de datos y creación de tokens falsos.
+
+Para mitigar el daño deben:
+
+eliminar .env del repositorio,
+agregarlo a .gitignore,
+cambiar todas las credenciales expuestas,
+revocar tokens antiguos,
+y revisar accesos sospechosos.
+
+QUÉ ENTENDIÓ BIEN: (una frase) El apoyarnos mi compañero y yo para hacer los trabajos.
+
+QUÉ NECESITA REPASAR: (una frase) Sería bueno repasar por si queda alguna duda.
+
+
+
+
+EVALUADOR: Jimmy Mori
+EVALUADO: Lucas Jimenez
+ESCENARIO ELEGIDO:
+- Un nuevo desarrollador se une al equipo y clona el repositorio. Explica paso a paso qué tiene que hacer para que el servidor funcione en su máquina. ¿Qué archivo lo guía?
+
+RESUMEN DE LA RESPUESTA:
+Los pasos para que el servidor le corra y pueda crear su usuario y contraseña, y token son los siguientes:
+1. Descargar nuestra base de datos (MongoDB), junto con su app que viene incluido (MongoDB Compass):
+https://www.mongodb.com/try/download/community
+
+2. En la terminal poner:
+npm init -y
+npm install nodemon --save-dev
+npm install bcrypt jsonwebtoken dotenv express mongoose
+npm run dev
+
+# Respuesta a esperar:
+Restaurante corriendo en http://localhost:3000
+MongoDB conectado — restaurante
+
+El archivo que guía en que puerto se abrirá y a que basa de datos se conectará es config/index.js
+
+QUÉ ENTENDIÓ BIEN: (una frase)
+Como inducir a un nuevo compañero y en donde guarda la guía del proyecto.
+
+QUÉ NECESITA REPASAR: (una frase)
+Qué mas podemos poner en index.js para proyectos aún mas grande y reales.
